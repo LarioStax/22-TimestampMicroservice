@@ -49,11 +49,19 @@ app.get("/api/timestamp/:time", function(req, res) {
     resObject.unix = unix; //test passed with unix (seconds) returned, instead of miliseconds (not sure why!)
     resObject.utc = utcString; 
     res.json(resObject); 
-  } //check wether :time parameter is a valid date
-  else if (isNan(Date.parse(time))) {
+  } 
+  //check wether :time parameter is a valid date
+  else if (isNaN(Date.parse(time))) {
  		resObject.error = "Invalid Date";
     console.log(resObject);
   	res.json(resObject);
+  } else {
+    let miliseconds = Date.parse(time); 
+    let dateObj = new Date(miliseconds);
+    let utcString = dateObj.toUTCString();
+    resObject.unix = miliseconds;
+    resObject.utc = utcString;
+    res.json(resObject);
   }
 });
 
