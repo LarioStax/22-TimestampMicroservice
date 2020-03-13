@@ -19,52 +19,43 @@ app.get("/api/hello", function(req, res) {
 
 //return current time in unix and utc
 app.get("/api/timestamp/", function(req, res) {
-  let miliseconds = Date.now();
-  // let unix = miliseconds / 1000;
-  let dateObj = new Date(miliseconds);
-  let utcString = dateObj.toUTCString();
-	let resObject = {"unix": miliseconds, "utc": utcString};
+  let milliseconds = Date.now();
+  //create a new date object from milliseconds and convert it to a string using the UTC timezone
+  let utcString = new Date(milliseconds).toUTCString();
+	let resObject = {"unix": milliseconds, "utc": utcString};
   res.json(resObject); 
 });
 
 app.get("/api/timestamp/:time", function(req, res) {
-  //check wether :time parameter is a unix timestamp (only numbers)
-  // regex check for pure numbers
-  let regex = /^\d+$/;
   let time = req.params.time;
-  let resObject = {
-  	"unix": Number,
-  	"utc": String
-  }
+  let resObject = {}; 
+  //check wether :time parameter is a unix timestamp (only numbers)
+  //regex check --> only numbers
+  let regex = /^\d+$/;
+
   if (regex.test(time)) {
-    //turn unix from params into number and assign it
+    //turn unix from params into number and assign it to a variable
     let unix = Number(time);
-    //turn unix timestamp to miliseconds and create a new date object
-    // ************ using moment.js ************
-    //let utcString = moment.unix(unix).toDate().toUTCString();
-    // ************ without.moment.js ************
-    let miliseconds = unix * 1000;
-    let dateObj = new Date(miliseconds);
-    let utcString = dateObj.toUTCString();
-    resObject.unix = unix; //test passed with unix (seconds) returned, instead of miliseconds (not sure why!)
+    //turn unix timestamp to milliseconds
+    let milliseconds = unix * 1000;
+    //create a new date object from milliseconds and convert it to a string using the UTC timezone
+    let utcString = new Date(milliseconds).toUTCString();
+    resObject.unix = unix; //test passed with unix (seconds) returned, instead of milliseconds (not sure why!)
     resObject.utc = utcString; 
-    res.json(resObject); 
   } 
   //check wether :time parameter is a valid date
   else if (isNaN(Date.parse(time))) {
  		resObject.error = "Invalid Date";
-    console.log(resObject);
-  	res.json(resObject);
   } else {
-    let miliseconds = Date.parse(time); 
-    let dateObj = new Date(miliseconds);
-    let utcString = dateObj.toUTCString();
-    resObject.unix = miliseconds;
+    let milliseconds = Date.parse(time); 
+    //create a new date object from milliseconds and convert it to a string using the UTC timezone
+    let utcString = new Date(milliseconds).toUTCString();
+    resObject.unix = milliseconds;
     resObject.utc = utcString;
-    res.json(resObject);
   }
+  res.json(resObject); //respond with the filled object
 });
 
-app.listen("8000", function() {
-	console.log("Timestamp listening on 8000!");
-})
+app.listen(process.env.PORT, function() {
+	console.log("Timestamp listening on " + process.env.PORT + "!");
+});
