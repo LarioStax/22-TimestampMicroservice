@@ -17,6 +17,15 @@ app.get("/api/hello", function(req, res) {
 	res.json({greeting: "Hello API"});
 })
 
+//return current time in unix and utc
+app.get("/api/timestamp/", function(req, res) {
+  let miliseconds = Date.now();
+  // let unix = miliseconds / 1000;
+  let dateObj = new Date(miliseconds);
+  let utcString = dateObj.toUTCString();
+  res.json({"unix": miliseconds, "utc": utcString});
+});
+
 app.get("/api/timestamp/:time", function(req, res) {
 	console.log(req.params.time);
 	res.json(req.params.time);
