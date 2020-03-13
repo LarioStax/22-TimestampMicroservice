@@ -31,9 +31,14 @@ app.get("/api/timestamp/:time", function(req, res) {
   //check wether :time parameter is a unix timestamp (only numbers)
   // regex check for pure numbers
   let regex = /^\d+$/;
-  if (regex.test(req.params.time)) {
+  let time = req.params.time;
+  let resObject = {
+  	"unix": Number,
+  	"utc": String
+  }
+  if (regex.test(time)) {
     //turn unix from params into number and assign it
-    let unix = Number(req.params.time);
+    let unix = Number(time);
     //turn unix timestamp to miliseconds and create a new date object
     // ************ using moment.js ************
     //let utcString = moment.unix(unix).toDate().toUTCString();
@@ -41,10 +46,16 @@ app.get("/api/timestamp/:time", function(req, res) {
     let miliseconds = unix * 1000;
     let dateObj = new Date(miliseconds);
     let utcString = dateObj.toUTCString();
-    let resObject = {"unix": unix, "utc": utcString}; //test passed with unix (seconds) returned, instead of miliseconds (not sure why!)
+    resObject.unix = unix; //test passed with unix (seconds) returned, instead of miliseconds (not sure why!)
+    resObject.utc = utcString; 
     res.json(resObject); 
+  } //check wether :time parameter is a valid date
+  else if (isNan(Date.parse(time))) {
+ 		resObject.error = "Invalid Date";
+    console.log(resObject);
+  	res.json(resObject);
   }
-})
+});
 
 app.listen("8000", function() {
 	console.log("Timestamp listening on 8000!");
