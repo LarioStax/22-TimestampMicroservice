@@ -18,7 +18,9 @@
         <h3>User Stories :</h3>
         <ol class="user-stories">
           
-          <li>The API endpoint is <code>GET [project_url]/api/timestamp/:date_string?</code></li>
+          <li>The API endpoint is 
+          	<code>[PROJECT_URL]/api/timestamp/:date_string?</code>
+          </li>
           <li>A date string is valid if can be successfully parsed by <code>new Date(date_string)</code>.<br>
           Note that the unix timestamp needs to be an <strong>integer</strong> (not a string) specifying <strong>milliseconds</strong>.<br> <u style="color: red;">Stax Edit: FreeCodeCamps test for unix timestamp request passes with unix timestamp in seconds returned, not milliseconds. The rest of them require milliseconds as expected.</u> <br>
           In our test we will use date strings compliant with ISO-8601 (e.g. <code>"2016-11-20"</code>) because this will ensure an UTC timestamp.</li>
@@ -33,8 +35,23 @@
         <h3>Example Usage:</h3>
         <ul>
           <li>
-            <code>GET [project url]/api/timestamp/2015-12-25</code></li>
-          <li><code>GET project url]/api/timestamp/1450137600</code></li>
+            <span>Date Input: </span><br>
+            <code>
+            	<a href="https://stax-timestamp-microservice.glitch.me/api/timestamp/2015-12-25">https://stax-timestamp-microservice.glitch.me/api/timestamp/2015-12-25</a>
+            </code>
+          </li>
+          <li>
+          	<span>Unix Timestamp Input: </span><br>
+          	<code>
+          		<a href="https://stax-timestamp-microservice.glitch.me/api/timestamp/1450137600">https://stax-timestamp-microservice.glitch.me/api/timestamp/1450137600</a>
+          	</code>
+          </li>
+          <li>
+          	<span>Current Time Request: </span><br>
+          	<code>
+          		<a href="https://stax-timestamp-microservice.glitch.me/api/timestamp/">https://stax-timestamp-microservice.glitch.me/api/timestamp/</a>
+          	</code>
+          </li>
         </ul>
 
         <h3>Example Output:</h3>

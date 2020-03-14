@@ -12,15 +12,15 @@ body {
 
 .container {
 	padding: 0;
-	margin-top: 40px;
+	margin-top: 20px;
 }
 
 h3 {
-  margin-top: 30px;
+  margin-top: 15px;
 }
 
 .footer {
-	margin-top: 40px;
+	margin-top: 20px;
 }
 
 .user-stories {
@@ -39,7 +39,10 @@ ol {
 	list-style-position: outside;
 }
 ul {
-	list-style-type: none;
+	margin: auto;
+	max-width: 700px;
+	/*list-style-type: none;*/
+	text-align: left;
 }
 
 li {
